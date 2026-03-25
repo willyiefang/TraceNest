@@ -1,0 +1,19 @@
+# Node
+tracenest-worker/node_modules/
+
+# Worker runtime output (generated during capture)
+tracenest-worker/output/
+
+# Java build output
+tracenest-be/target/
+
+# Maven wrapper downloads (keep if you want, but usually safe to ignore)
+tracenest-be/.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+Thumbs.db
+*.swp
