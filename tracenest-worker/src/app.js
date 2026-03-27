@@ -1,14 +1,36 @@
 import { runCapture } from "./captureService.js";
-import { reportCaptureResult } from "./uploadClient.js";
+import { createCaptureTask, finishCaptureTask, checkApiHealth } from "./uploadClient.js";
 
 async function main() {
   const targetUrl = process.env.TARGET_URL || "https://example.com";
-  const taskId = process.env.TASK_ID || "local-dev-task-1";
+  let backendTaskId = process.env.TASK_ID; // if not provided, worker will create it via API
 
-  console.log(`[worker] start task=${taskId} url=${targetUrl}`);
-  const result = await runCapture(taskId, targetUrl);
-  await reportCaptureResult(result);
-  console.log("[worker] done");
+  if (!backendTaskId) {
+    console.log(`[worker] creating backend task for url=${targetUrl}`);
+    const created = await createCaptureTask(targetUrl);
+    backendTaskId = created.taskId;
+  }
+
+  console.log(`[worker] start url=${targetUrl} taskId=${backendTaskId}`);
+  const result = await runCapture(backendTaskId, targetUrl);
+
+  // health check for easier debugging
+  try {
+    const health = await checkApiHealth();
+    console.log("[worker] api reachable", health);
+  } catch (e) {
+    console.warn("[worker] api not reachable:", e.message);
+  }
+
+  const finishPayload = {
+    capturedAt: result.capturedAt,
+    html: result.html,
+    screenshotText: result.screenshotText,
+    workerVersion: "worker-v0",
+  };
+
+  const finished = await finishCaptureTask(backendTaskId, finishPayload);
+  console.log("[worker] finished task", finished);
 }
 
 main().catch((error) => {

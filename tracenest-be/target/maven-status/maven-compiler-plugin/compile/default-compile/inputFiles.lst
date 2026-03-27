@@ -1,2 +1,7 @@
+D:\TraceNest\tracenest-be\src\main\java\com\tracenest\api\capture\CaptureTask.java
+D:\TraceNest\tracenest-be\src\main\java\com\tracenest\api\capture\CaptureTaskController.java
+D:\TraceNest\tracenest-be\src\main\java\com\tracenest\api\capture\CaptureTaskStatus.java
+D:\TraceNest\tracenest-be\src\main\java\com\tracenest\api\capture\InMemoryCaptureTaskRepository.java
+D:\TraceNest\tracenest-be\src\main\java\com\tracenest\api\capture\WorkerCaptureCallbackController.java
 D:\TraceNest\tracenest-be\src\main\java\com\tracenest\api\TraceNestApplication.java
 D:\TraceNest\tracenest-be\src\main\java\com\tracenest\api\web\HealthController.java

@@ -11,12 +11,9 @@ export async function runCapture(taskId, url) {
 
   // Placeholder capture output until browser integration is added.
   const html = `<html><body><h1>Captured</h1><p>url=${url}</p><p>capturedAt=${capturedAt}</p></body></html>`;
+  const screenshotText = `fake-screenshot for ${url} at ${capturedAt}\n`;
   await fs.writeFile(htmlPath, html, "utf-8");
-  await fs.writeFile(
-    screenshotPath,
-    `fake-screenshot for ${url} at ${capturedAt}\n`,
-    "utf-8"
-  );
+  await fs.writeFile(screenshotPath, screenshotText, "utf-8");
 
   return {
     taskId,
@@ -25,5 +22,8 @@ export async function runCapture(taskId, url) {
     capturedAt,
     htmlPath,
     screenshotPath,
+    // Return artifact contents so the worker can POST them to the API.
+    html,
+    screenshotText,
   };
 }
