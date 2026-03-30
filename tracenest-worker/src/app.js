@@ -1,5 +1,11 @@
 import { runCapture } from "./captureService.js";
-import { createCaptureTask, finishCaptureTask, checkApiHealth } from "./uploadClient.js";
+import {
+  createCaptureTask,
+  startCaptureTask,
+  finishCaptureTask,
+  failCaptureTask,
+  checkApiHealth,
+} from "./uploadClient.js";
 
 async function main() {
   const targetUrl = process.env.TARGET_URL || "https://example.com";
@@ -12,7 +18,24 @@ async function main() {
   }
 
   console.log(`[worker] start url=${targetUrl} taskId=${backendTaskId}`);
-  const result = await runCapture(backendTaskId, targetUrl);
+  await startCaptureTask(backendTaskId, {
+    startedAt: new Date().toISOString(),
+    workerVersion: "worker-v0",
+  });
+
+  let result;
+  try {
+    result = await runCapture(backendTaskId, targetUrl);
+  } catch (e) {
+    console.error("[worker] capture failed", e);
+    await failCaptureTask(backendTaskId, {
+      failedAt: new Date().toISOString(),
+      errorType: "CAPTURE_ERROR",
+      message: e?.message || "unknown error",
+      workerVersion: "worker-v0",
+    });
+    throw e;
+  }
 
   // health check for easier debugging
   try {

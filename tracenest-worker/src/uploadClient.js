@@ -48,6 +48,44 @@ export async function finishCaptureTask(taskId, payload) {
   return response.json();
 }
 
+export async function startCaptureTask(taskId, payload) {
+  const endpoint = `${apiBaseUrl()}/internal/v1/worker/capture-tasks/${encodeURIComponent(
+    taskId
+  )}/start`;
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    throw new Error(`start task failed: ${response.status} ${text}`);
+  }
+
+  return response.json();
+}
+
+export async function failCaptureTask(taskId, payload) {
+  const endpoint = `${apiBaseUrl()}/internal/v1/worker/capture-tasks/${encodeURIComponent(
+    taskId
+  )}/fail`;
+
+  const response = await fetch(endpoint, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    throw new Error(`fail task failed: ${response.status} ${text}`);
+  }
+
+  return response.json();
+}
+
 async function createAndFinishCaptureTask(url, existingTaskId, result) {
   // This worker runs in a "demo" mode for v0:
   // 1) create capture task (or reuse an id if provided)

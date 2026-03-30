@@ -2,6 +2,10 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 export async function runCapture(taskId, url) {
+  if (process.env.FORCE_FAIL === "1") {
+    throw new Error("forced failure for testing");
+  }
+
   const outputDir = path.resolve("output", taskId);
   await fs.mkdir(outputDir, { recursive: true });
 

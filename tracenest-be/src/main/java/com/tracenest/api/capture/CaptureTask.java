@@ -15,6 +15,11 @@ public class CaptureTask {
     private String screenshotText;
     private Instant capturedAt;
 
+    private Instant startedAt;
+    private Instant failedAt;
+    private String failureType;
+    private String failureMessage;
+
     public CaptureTask() {}
 
     public CaptureTask(String taskId, String url, CaptureTaskStatus status, Instant createdAt) {
@@ -87,5 +92,37 @@ public class CaptureTask {
 
     public void setCapturedAt(Instant capturedAt) {
         this.capturedAt = capturedAt;
+    }
+
+    public Instant getStartedAt() {
+        return startedAt;
+    }
+
+    public void setStartedAt(Instant startedAt) {
+        this.startedAt = startedAt;
+    }
+
+    public Instant getFailedAt() {
+        return failedAt;
+    }
+
+    public void setFailedAt(Instant failedAt) {
+        this.failedAt = failedAt;
+    }
+
+    public String getFailureType() {
+        return failureType;
+    }
+
+    public void setFailureType(String failureType) {
+        this.failureType = failureType;
+    }
+
+    public String getFailureMessage() {
+        return failureMessage;
+    }
+
+    public void setFailureMessage(String failureMessage) {
+        this.failureMessage = failureMessage;
     }
 }
