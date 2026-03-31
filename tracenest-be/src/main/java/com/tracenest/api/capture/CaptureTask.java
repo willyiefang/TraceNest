@@ -85,7 +85,7 @@ public class CaptureTask {
     public void setScreenshotText(String screenshotText) {
         this.screenshotText = screenshotText;
     }
-
+    //v2:success
     public Instant getCapturedAt() {
         return capturedAt;
     }
@@ -93,7 +93,7 @@ public class CaptureTask {
     public void setCapturedAt(Instant capturedAt) {
         this.capturedAt = capturedAt;
     }
-
+    //v1:start
     public Instant getStartedAt() {
         return startedAt;
     }
@@ -101,15 +101,15 @@ public class CaptureTask {
     public void setStartedAt(Instant startedAt) {
         this.startedAt = startedAt;
     }
-
+    //v3:fail
     public Instant getFailedAt() {
         return failedAt;
     }
 
     public void setFailedAt(Instant failedAt) {
         this.failedAt = failedAt;
-    }
-
+    }   
+    //FAILED
     public String getFailureType() {
         return failureType;
     }
@@ -117,7 +117,7 @@ public class CaptureTask {
     public void setFailureType(String failureType) {
         this.failureType = failureType;
     }
-
+    //FAILED details:
     public String getFailureMessage() {
         return failureMessage;
     }
