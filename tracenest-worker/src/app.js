@@ -7,6 +7,7 @@ import {
   checkApiHealth,
 } from "./uploadClient.js";
 
+//app.js起到一个main函数的作用
 async function main() {
   const targetUrl = process.env.TARGET_URL || "https://example.com";
   let backendTaskId = process.env.TASK_ID; // if not provided, worker will create it via API
